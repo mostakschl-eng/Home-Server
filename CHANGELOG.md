@@ -29,6 +29,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Documented full system architecture, network topology, and ingress maps in `ARCHITECTURE.md`.
 - Added `requirements.txt` defining Python dependencies (`paramiko`, `cryptography`, `bcrypt`) for headless SSH telemetry.
 - Created `docs/09-agent-developer-guide.md` specifying rules of engagement, credential setups, and safety guidelines for future AI agents and engineers.
+- Added `runbooks/inc-004-safe-firewall-and-port-isolation.md` documenting dual-network SSH access (LAN + Tailscale) and zero-lockout UFW hardening.
+
+### Fixed
+- Added user `mostak` to the `docker` system group, enabling seamless non-sudo Docker CLI access for administrators and automated agents.
+- Optimized Intel Wi-Fi power scheme via `/etc/modprobe.d/iwlmvm.conf` (`power_scheme=1`) to eliminate power-save throttling and packet jitter.
+- Automated MCP Memory container ONNX model verification via `/home/mostak/onnx_model/ensure_model.sh` and `@reboot` cron job, preventing startup crash loops upon container recreation.
 
 ---
 

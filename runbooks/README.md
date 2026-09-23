@@ -13,6 +13,7 @@ Following SRE best practices modeled after hyperscaler reliability engineering (
 | **[INC-001](inc-001-mcp-onnx-model-s3-timeout.md)** | MCP Memory ONNX Model S3 Download Timeout | `mcp-memory-service` | High | Pre-downloaded model on host and injected into container cache |
 | **[INC-002](inc-002-tailscale-udp-gro-optimization.md)** | Tailscale WireGuard Throughput Bottleneck | `tailscaled`, `wlp2s0` | Medium | Created custom systemd service enabling UDP GRO forwarding |
 | **[INC-003](inc-003-docker-disk-exhaustion-prevention.md)** | Docker OverlayFS Build Cache & Layer Bloat | `dockerd`, `cron` | Medium | Deployed automated weekly pruning pipeline in `/etc/cron.weekly` |
+| **[INC-004](inc-004-safe-firewall-and-port-isolation.md)** | Safe Firewall Hardening & Dual-Network Access Strategy | `ufw`, `iptables`, `tailscale` | Medium | Implemented zero-lockout SOP allowing SSH on LAN & Tailscale |
 
 ---
 
