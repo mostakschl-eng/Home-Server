@@ -10,8 +10,7 @@ Coolify is an open-source, self-hosted Heroku / Netlify / Vercel alternative pro
 
 ```text
 Version:          4.3.23
-Trusted Domain:   https://homeserver.tailc8f61e.ts.net (Let's Encrypt / Green Padlock)
-Proxy Domain:     https://coolify.100.81.129.68.sslip.io (HTTPS / Auto-Redirect from HTTP)
+Canonical URL:    http://coolify.100.81.129.68.sslip.io (HTTP / Direct Instant Access)
 Direct Port:      http://100.81.129.68:8000 (Internal/Direct Fallback)
 Access Policy:    LOCKED on Home Wi-Fi (192.168.0.149:8000 -> Connection Refused)
 Config Path:      /data/coolify/source/
@@ -40,11 +39,11 @@ Environment File: /data/coolify/source/.env
 A high-performance persistent context and memory layer implementing the **Model Context Protocol (MCP)**, allowing AI coding assistants and agents to store and recall long-term project knowledge and conversation memory.
 
 ```text
-Container Name:   00lpnw9fxnqwf6f8lzonywhk-081811531731
+Container Name:   00lpnw9fxnqwf6f8lzonywhk-080148266582
 Base Image:       doobidoo/mcp-memory-service:latest
 Host Direct Port: 100.81.129.68:8001 -> 8000 TCP (Tailscale Only, Locked from Local Wi-Fi)
 Proxy Routing:    Traefik reverse proxy
-Canonical URL:    https://mcp.100.81.129.68.sslip.io (HTTPS / Auto-Redirect from HTTP)
+Canonical URL:    http://mcp.100.81.129.68.sslip.io (HTTP / Direct Instant Access)
 Direct Port:      http://100.81.129.68:8001 (Direct API Fallback)
 Project Name:     ai-memory
 Environment:      production
@@ -68,8 +67,8 @@ Nextcloud Hub 35 (Linuxserver edition) deployed via Coolify providing self-hoste
 
 ```text
 Service Name:     nextcloud-syo7laqurhdbmmidrumfckbb
-Canonical URL:    https://nextcloud.100.81.129.68.sslip.io (HTTPS / Auto-Redirect from HTTP)
-Routing Policy:   Traefik Reverse Proxy (Auto-Redirect HTTP 80 -> HTTPS 443)
+Canonical URL:    http://nextcloud.100.81.129.68.sslip.io (HTTP / Direct Instant Access)
+Routing Policy:   Traefik Reverse Proxy (Native HTTP 80 Routing)
 Project Name:     personal-storage
 Environment:      production
 ```
