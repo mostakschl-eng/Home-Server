@@ -10,7 +10,8 @@ Coolify is an open-source, self-hosted Heroku / Netlify / Vercel alternative pro
 
 ```text
 Version:          4.3.23
-Canonical URL:    https://coolify.100.81.129.68.sslip.io (HTTPS / Auto-Redirect from HTTP)
+Trusted Domain:   https://homeserver.tailc8f61e.ts.net (Let's Encrypt / Green Padlock)
+Proxy Domain:     https://coolify.100.81.129.68.sslip.io (HTTPS / Auto-Redirect from HTTP)
 Direct Port:      http://100.81.129.68:8000 (Internal/Direct Fallback)
 Access Policy:    LOCKED on Home Wi-Fi (192.168.0.149:8000 -> Connection Refused)
 Config Path:      /data/coolify/source/
