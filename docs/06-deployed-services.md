@@ -11,7 +11,8 @@ Coolify is an open-source, self-hosted Heroku / Netlify / Vercel alternative pro
 ```text
 Version:          4.3.23
 Dashboard URL:    http://100.81.129.68:8000 (Direct Tailscale Port)
-Proxy Domain:     http://coolify.100.81.129.68.sslip.io (Traefik Ingress)
+Proxy Domain:     http://coolify.100.81.129.68.sslip.io (HTTP)
+Secure Domain:    https://coolify.100.81.129.68.sslip.io (HTTPS)
 Access Policy:    LOCKED on Home Wi-Fi (192.168.0.149:8000 -> Connection Refused)
 Config Path:      /data/coolify/source/
 Environment File: /data/coolify/source/.env
@@ -42,8 +43,9 @@ A high-performance persistent context and memory layer implementing the **Model 
 Container Name:   00lpnw9fxnqwf6f8lzonywhk-081811531731
 Base Image:       doobidoo/mcp-memory-service:latest
 Host Direct Port: 100.81.129.68:8001 -> 8000 TCP (Tailscale Only, Locked from Local Wi-Fi)
-Proxy Routing:    Traefik reverse proxy
-Dynamic Domain:   00lpnw9fxnqwf6f8lzonywhk.223.29.215.54.sslip.io
+Proxy Routing:    Traefik reverse proxy (HTTP & HTTPS)
+HTTP URL:         http://mcp.100.81.129.68.sslip.io
+HTTPS URL:        https://mcp.100.81.129.68.sslip.io
 Project Name:     ai-memory
 Environment:      production
 ```
@@ -66,8 +68,9 @@ Nextcloud Hub 35 (Linuxserver edition) deployed via Coolify providing self-hoste
 
 ```text
 Service Name:     nextcloud-syo7laqurhdbmmidrumfckbb
-Application URL:  http://nextcloud.100.81.129.68.sslip.io
-Routing Policy:   Traefik Reverse Proxy (Internal Port 80)
+HTTP URL:         http://nextcloud.100.81.129.68.sslip.io
+HTTPS URL:        https://nextcloud.100.81.129.68.sslip.io
+Routing Policy:   Traefik Reverse Proxy (Ports 80 & 443)
 Project Name:     personal-storage
 Environment:      production
 ```
