@@ -15,6 +15,8 @@ Following SRE best practices modeled after hyperscaler reliability engineering (
 | **[INC-003](inc-003-docker-disk-exhaustion-prevention.md)** | Docker OverlayFS Build Cache & Layer Bloat | `dockerd`, `cron` | Medium | Deployed automated weekly pruning pipeline in `/etc/cron.weekly` |
 | **[INC-004](inc-004-safe-firewall-and-port-isolation.md)** | Safe Firewall Hardening & Dual-Network Access Strategy | `ufw`, `iptables`, `tailscale` | Medium | Implemented zero-lockout SOP allowing SSH on LAN & Tailscale |
 | **[INC-005](inc-005-bdix-subnet-mss-clamping.md)** | Subnet Router BDIX Media Server Large Response Hang | `iptables`, `tailscale`, `172.16.50.0/24` | Medium | Applied TCP MSS Clamping to prevent MTU packet drop across WireGuard |
+| **[INC-006](inc-006-docker-isp-ttl-drop.md)** | Docker Outbound WAN Packet Drop via ISP Anti-Tethering TTL Filter | `iptables`, `dockerd`, `wlp2s0` | High | Added mangle table TTL normalization (`TTL --ttl-set 64`) |
+| **[INC-007](inc-007-tailscale-ip-nonlocal-bind-and-proxy-bridge.md)** | Tailscale Non-Local Bind Failure on Boot & Traefik Service Network Disconnect | `sysctl`, `coolify`, `traefik`, `nextcloud` | High | Enabled persistent `net.ipv4.ip_nonlocal_bind=1`, recreated Coolify, bridged proxy network |
 
 ---
 

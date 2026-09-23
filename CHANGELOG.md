@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Enforced Zero-Trust Tailscale port binding for Coolify (`100.81.129.68:8000`) and MCP Memory (`100.81.129.68:8001`), locking out unauthorized access from Local Home Wi-Fi while preserving dual-path SSH (Port 22) for maintenance.
 - Resolved BDIX Subnet media server (`172.16.50.14`) tab loading freeze by enabling kernel TCP MSS Clamping to prevent MTU packet drops across the Tailscale WireGuard tunnel.
 - Fixed container outbound WAN internet drops (`Could not fetch list of apps from the App Store`) by configuring iptables TTL normalization (`TTL --ttl-set 64`) to defeat upstream ISP anti-tethering filters (`INC-006`).
+- Fixed Coolify and Nextcloud site inaccessibility (`404 page not found` / crash on boot) by configuring persistent kernel non-local IP binding (`net.ipv4.ip_nonlocal_bind=1`), recreating Coolify stack, and bridging Traefik reverse proxy to the Nextcloud service network (`INC-007`).
 
 ---
 

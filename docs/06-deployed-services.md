@@ -10,7 +10,8 @@ Coolify is an open-source, self-hosted Heroku / Netlify / Vercel alternative pro
 
 ```text
 Version:          4.3.23
-Dashboard URL:    http://100.81.129.68:8000 (Tailscale Mesh Only)
+Dashboard URL:    http://100.81.129.68:8000 (Direct Tailscale Port)
+Proxy Domain:     http://coolify.100.81.129.68.sslip.io (Traefik Ingress)
 Access Policy:    LOCKED on Home Wi-Fi (192.168.0.149:8000 -> Connection Refused)
 Config Path:      /data/coolify/source/
 Environment File: /data/coolify/source/.env
