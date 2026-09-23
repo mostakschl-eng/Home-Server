@@ -53,8 +53,8 @@ Tailscale packet forwarding is optimized via a custom systemd service running `/
 | **443** | TCP/UDP | `0.0.0.0`, `[::]` | `docker-proxy` -> `coolify-proxy` | HTTPS ingress / HTTP/3 QUIC |
 | **6001** | TCP | `0.0.0.0`, `[::]` | `docker-proxy` -> `coolify-realtime` | Soketi WebSocket frontend |
 | **6002** | TCP | `0.0.0.0`, `[::]` | `docker-proxy` -> `coolify-realtime` | Soketi WebSocket administrative channel |
-| **8000** | TCP | `0.0.0.0`, `[::]` | `docker-proxy` -> `coolify` | Coolify management web UI |
-| **8001** | TCP | `0.0.0.0`, `[::]` | `docker-proxy` -> `mcp-memory` | MCP Memory Service REST/API endpoint |
+| **8000** | TCP | `100.81.129.68` (Tailscale Only) | `docker-proxy` -> `coolify` | Coolify management UI (Locked from local Wi-Fi) |
+| **8001** | TCP | `100.81.129.68` (Tailscale Only) | `docker-proxy` -> `mcp-memory` | MCP Memory Service API (Locked from local Wi-Fi) |
 | **8080** | TCP | `0.0.0.0`, `[::]` | `docker-proxy` -> `coolify-proxy` | Traefik diagnostic/API port |
 | **41641** | UDP | `0.0.0.0`, `[::]` | `tailscaled` (PID 1213) | Tailscale direct WireGuard peer communication |
 | **45334** | TCP | `100.81.129.68` | `tailscaled` (PID 1213) | Tailscale node control socket |

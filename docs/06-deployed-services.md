@@ -10,8 +10,8 @@ Coolify is an open-source, self-hosted Heroku / Netlify / Vercel alternative pro
 
 ```text
 Version:          4.3.23
-Dashboard URL:    http://100.81.129.68:8000 (via Tailscale)
-                  http://192.168.0.149:8000 (via LAN)
+Dashboard URL:    http://100.81.129.68:8000 (Tailscale Mesh Only)
+Access Policy:    LOCKED on Home Wi-Fi (192.168.0.149:8000 -> Connection Refused)
 Config Path:      /data/coolify/source/
 Environment File: /data/coolify/source/.env
 ```
@@ -40,7 +40,7 @@ A high-performance persistent context and memory layer implementing the **Model 
 ```text
 Container Name:   00lpnw9fxnqwf6f8lzonywhk-081811531731
 Base Image:       doobidoo/mcp-memory-service:latest
-Host Direct Port: 8001 -> 8000 TCP
+Host Direct Port: 100.81.129.68:8001 -> 8000 TCP (Tailscale Only, Locked from Local Wi-Fi)
 Proxy Routing:    Traefik reverse proxy
 Dynamic Domain:   00lpnw9fxnqwf6f8lzonywhk.223.29.215.54.sslip.io
 Project Name:     ai-memory

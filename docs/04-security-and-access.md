@@ -54,10 +54,13 @@ In containerized environments running Docker Engine, Docker automatically manipu
 - Routes incoming external traffic on published container ports directly to container private IPs via NAT (Network Address Translation).
 - Enabling naive UFW without Docker-aware rules often results in Docker bypassing standard UFW restrictions due to NAT packet priority.
 
-### Security Recommendation
-To lock down external LAN access while preserving Tailscale and Docker functionality:
-1. Enforce traffic restriction using the `DOCKER-USER` chain or bind published ports to `127.0.0.1` and `100.81.129.68` rather than `0.0.0.0`.
-2. Restrict non-Tailscale ingress if the server is exposed to untrusted networks.
+### Active Zero-Trust Port Isolation Architecture
+To lock down external Wi-Fi LAN access while guaranteeing zero-risk remote access:
+1. **Dual-Path Emergency SSH Access**: Port 22 (`sshd`) remains bound to `0.0.0.0:22` (Fail2Ban protected), allowing terminal logins from both Local Wi-Fi (`192.168.0.149`) and Tailscale (`100.81.129.68`).
+2. **Tailscale-Only Application Binding**: Management services are explicitly bound to the Tailscale IP (`100.81.129.68`), preventing Docker from listening on Wi-Fi:
+   - Coolify Dashboard: `100.81.129.68:8000` (Local Wi-Fi returns *Connection refused*)
+   - MCP Memory Service: `100.81.129.68:8001` (Local Wi-Fi returns *Connection refused*)
+3. **Ghost Mode on Home LAN**: Any rogue device or guest connected to the home Wi-Fi scanning the server IP cannot detect or access Coolify or internal AI APIs.
 
 ---
 
