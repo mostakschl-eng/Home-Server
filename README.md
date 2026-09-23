@@ -43,6 +43,8 @@ Home-Server/
 ├── ARCHITECTURE.md                    # System architecture, container ingress & network topology
 ├── CHANGELOG.md                       # Historical log of upgrades and structural changes
 │
+├── requirements.txt                   # Python dependencies for automated SSH audits
+│
 ├── docs/                              # Deep Technical Reference
 │   ├── 01-system-specification.md     # OS, Kernel, Hardware, CPU/RAM, Power Management
 │   ├── 02-storage-and-disks.md        # Storage hardware, LVM volumes, mounts, and health
@@ -51,7 +53,8 @@ Home-Server/
 │   ├── 05-container-ecosystem.md      # Docker daemon config, Docker networks, Traefik proxy
 │   ├── 06-deployed-services.md        # Coolify suite, PostgreSQL, Redis, MCP Memory Service
 │   ├── 07-maintenance-automation.md   # Weekly cleanup cron, Tailscale GRO service, log rotation
-│   └── 08-disaster-recovery.md        # Backups, SQLite snapshots, bare-metal restore SOP
+│   ├── 08-disaster-recovery.md        # Backups, SQLite snapshots, bare-metal restore SOP
+│   └── 09-agent-developer-guide.md    # Operating guide & safety protocol for AI agents & engineers
 │
 ├── runbooks/                          # Incident Post-Mortems & Operational Runbooks
 │   ├── README.md                      # Runbook catalog & emergency troubleshooting guide

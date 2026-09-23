@@ -27,6 +27,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - `inc-002-tailscale-udp-gro-optimization.md`
   - `inc-003-docker-disk-exhaustion-prevention.md`
 - Documented full system architecture, network topology, and ingress maps in `ARCHITECTURE.md`.
+- Added `requirements.txt` defining Python dependencies (`paramiko`, `cryptography`, `bcrypt`) for headless SSH telemetry.
+- Created `docs/09-agent-developer-guide.md` specifying rules of engagement, credential setups, and safety guidelines for future AI agents and engineers.
 
 ---
 

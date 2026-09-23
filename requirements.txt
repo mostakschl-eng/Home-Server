@@ -1,0 +1,4 @@
+# Automated SSH & Telemetry Dependencies
+paramiko>=3.5.0
+cryptography>=42.0.0
+bcrypt>=4.1.0
