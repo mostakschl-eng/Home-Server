@@ -59,7 +59,36 @@ Environment:      production
 
 ---
 
-## 3. 🛡️ System Host Services
+## 3. ☁️ Nextcloud Private Cloud Suite
+
+Nextcloud Hub 35 (Linuxserver edition) deployed via Coolify providing self-hosted personal cloud storage, document sync, WebDAV, and automatic photo backup for mobile and desktop clients.
+
+```text
+Service Name:     nextcloud-syo7laqurhdbmmidrumfckbb
+Application URL:  http://nextcloud.100.81.129.68.sslip.io
+Routing Policy:   Traefik Reverse Proxy (Internal Port 80)
+Project Name:     personal-storage
+Environment:      production
+```
+
+### Component Architecture
+- **Nextcloud Web Engine** (`lscr.io/linuxserver/nextcloud:latest`):
+  - PHP 8.x + Nginx + APCu memory caching and transactional file locking.
+  - Volumes:
+    - `/config`: `syo7laqurhdbmmidrumfckbb_nextcloud-config`
+    - `/data`: `syo7laqurhdbmmidrumfckbb_nextcloud-data`
+- **PostgreSQL 16 Database** (`postgres:16-alpine`):
+  - Dedicated relational database holding 348 Nextcloud system and user tables.
+  - Container Name: `nextcloud-db-syo7laqurhdbmmidrumfckbb`
+  - Volume: `syo7laqurhdbmmidrumfckbb_nextcloud-postgresql-data`
+- **Redis 7.4 Cache** (`redis:7.4-alpine`):
+  - In-memory cache and transactional lock queue for rapid WebDAV synchronization.
+  - Container Name: `redis-syo7laqurhdbmmidrumfckbb`
+  - Volume: `syo7laqurhdbmmidrumfckbb_nextcloud-redis-data`
+
+---
+
+## 4. 🛡️ System Host Services
 
 | Service | Daemon | Function |
 | :--- | :--- | :--- |

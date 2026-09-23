@@ -52,22 +52,26 @@ apt-get clean >/dev/null 2>&1
 Located at `/etc/systemd/system/tailscale-gro.service`:
 
 ```ini
+```ini
 [Unit]
-Description=Enable UDP GRO forwarding for Tailscale
-After=network.target
+Description=Network Optimizations (Tailscale UDP GRO, TCP MSS Clamping, ISP TTL Normalization)
+After=network.target tailscaled.service
 
 [Service]
 Type=oneshot
+RemainAfterExit=yes
 ExecStart=/usr/sbin/ethtool -K wlp2s0 rx-udp-gro-forwarding on rx-gro-list off
+ExecStart=/bin/sh -c 'iptables -t mangle -C FORWARD -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu 2>/dev/null || iptables -t mangle -A FORWARD -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu'
+ExecStart=/bin/sh -c 'iptables -t mangle -C POSTROUTING -o wlp2s0 -j TTL --ttl-set 64 2>/dev/null || iptables -t mangle -A POSTROUTING -o wlp2s0 -j TTL --ttl-set 64'
 
 [Install]
 WantedBy=multi-user.target
 ```
 
-### Why This Is Essential
-Tailscale's encrypted WireGuard tunnels utilize UDP datagrams. Under default Linux network driver settings for Wi-Fi (`wlp2s0`), UDP packet processing occurs on a per-packet basis in userspace, causing elevated CPU load and throughput ceilings. 
-
-Enabling **Generic Receive Offload (`rx-udp-gro-forwarding on`)** coalesces incoming UDP packets into larger kernel-level frames, reducing CPU overhead by up to **60%** and maximizing transfer throughput across the mesh network.
+### Why These Are Essential
+1. **Generic Receive Offload (`rx-udp-gro-forwarding on`)**: Coalesces incoming WireGuard UDP packets into larger frames, reducing CPU overhead by up to **60%** and maximizing mesh throughput.
+2. **TCP MSS Clamping (`TCPMSS --clamp-mss-to-pmtu`)**: Prevents remote subnet responses (such as BDIX media servers) from exceeding the Tailscale tunnel's 1280-byte MTU (`INC-005`).
+3. **ISP TTL Normalization (`TTL --ttl-set 64`)**: Overcomes upstream ISP anti-tethering / anti-routing filters that silently drop container forwarded outbound packets (`TTL=63`), enabling all Docker services to reach public WAN APIs (`INC-006`).
 
 ---
 

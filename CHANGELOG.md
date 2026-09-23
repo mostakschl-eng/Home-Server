@@ -26,10 +26,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - `inc-001-mcp-onnx-model-s3-timeout.md`
   - `inc-002-tailscale-udp-gro-optimization.md`
   - `inc-003-docker-disk-exhaustion-prevention.md`
+  - `inc-004-safe-firewall-and-port-isolation.md`
+  - `inc-005-bdix-subnet-mss-clamping.md`
+  - `inc-006-docker-isp-ttl-drop.md`
 - Documented full system architecture, network topology, and ingress maps in `ARCHITECTURE.md`.
 - Added `requirements.txt` defining Python dependencies (`paramiko`, `cryptography`, `bcrypt`) for headless SSH telemetry.
 - Created `docs/09-agent-developer-guide.md` specifying rules of engagement, credential setups, and safety guidelines for future AI agents and engineers.
 - Added `runbooks/inc-004-safe-firewall-and-port-isolation.md` documenting dual-network SSH access (LAN + Tailscale) and zero-lockout UFW hardening.
+- Deployed Nextcloud Hub 35 Private Cloud Suite (`nextcloud`, `postgres:16-alpine`, `redis:7.4-alpine`) with Traefik routing at `http://nextcloud.100.81.129.68.sslip.io`.
 
 ### Fixed
 - Added user `mostak` to the `docker` system group, enabling seamless non-sudo Docker CLI access for administrators and automated agents.
@@ -37,6 +41,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Automated MCP Memory container ONNX model verification via `/home/mostak/onnx_model/ensure_model.sh` and `@reboot` cron job, preventing startup crash loops upon container recreation.
 - Enforced Zero-Trust Tailscale port binding for Coolify (`100.81.129.68:8000`) and MCP Memory (`100.81.129.68:8001`), locking out unauthorized access from Local Home Wi-Fi while preserving dual-path SSH (Port 22) for maintenance.
 - Resolved BDIX Subnet media server (`172.16.50.14`) tab loading freeze by enabling kernel TCP MSS Clamping to prevent MTU packet drops across the Tailscale WireGuard tunnel.
+- Fixed container outbound WAN internet drops (`Could not fetch list of apps from the App Store`) by configuring iptables TTL normalization (`TTL --ttl-set 64`) to defeat upstream ISP anti-tethering filters (`INC-006`).
 
 ---
 
