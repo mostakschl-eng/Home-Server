@@ -14,6 +14,7 @@ Following SRE best practices modeled after hyperscaler reliability engineering (
 | **[INC-002](inc-002-tailscale-udp-gro-optimization.md)** | Tailscale WireGuard Throughput Bottleneck | `tailscaled`, `wlp2s0` | Medium | Created custom systemd service enabling UDP GRO forwarding |
 | **[INC-003](inc-003-docker-disk-exhaustion-prevention.md)** | Docker OverlayFS Build Cache & Layer Bloat | `dockerd`, `cron` | Medium | Deployed automated weekly pruning pipeline in `/etc/cron.weekly` |
 | **[INC-004](inc-004-safe-firewall-and-port-isolation.md)** | Safe Firewall Hardening & Dual-Network Access Strategy | `ufw`, `iptables`, `tailscale` | Medium | Implemented zero-lockout SOP allowing SSH on LAN & Tailscale |
+| **[INC-005](inc-005-bdix-subnet-mss-clamping.md)** | Subnet Router BDIX Media Server Large Response Hang | `iptables`, `tailscale`, `172.16.50.0/24` | Medium | Applied TCP MSS Clamping to prevent MTU packet drop across WireGuard |
 
 ---
 

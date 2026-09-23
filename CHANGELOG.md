@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Optimized Intel Wi-Fi power scheme via `/etc/modprobe.d/iwlmvm.conf` (`power_scheme=1`) to eliminate power-save throttling and packet jitter.
 - Automated MCP Memory container ONNX model verification via `/home/mostak/onnx_model/ensure_model.sh` and `@reboot` cron job, preventing startup crash loops upon container recreation.
 - Enforced Zero-Trust Tailscale port binding for Coolify (`100.81.129.68:8000`) and MCP Memory (`100.81.129.68:8001`), locking out unauthorized access from Local Home Wi-Fi while preserving dual-path SSH (Port 22) for maintenance.
+- Resolved BDIX Subnet media server (`172.16.50.14`) tab loading freeze by enabling kernel TCP MSS Clamping to prevent MTU packet drops across the Tailscale WireGuard tunnel.
 
 ---
 
