@@ -6,19 +6,20 @@ This document details the security posture, authentication protocols, intrusion 
 
 ## 👤 User & Privilege Hierarchy
 
-The server implements a least-privilege administrative model:
+The server has an administrative account; it is not a restricted agent account:
 
 ```text
 User:         mostak
 UID:          1000
 Primary GID:  1000 (mostak)
-Groups:       mostak, adm, cdrom, sudo, dip, plugdev, users, lxd
+Groups:       mostak, adm, cdrom, sudo, docker, dip, plugdev, users, lxd
 Home:         /home/mostak
 Shell:        /bin/bash
 ```
 
 ### Administrative Privileges (`sudo`)
 - The user `mostak` has standard `sudo` privileges configured via `/etc/sudoers` (`%sudo ALL=(ALL:ALL) ALL`).
+- Membership in the `docker` group also grants root-level control through the Docker socket. A sudo allowlist would not restrict this account's Docker access.
 - Direct root login is disabled for interactive SSH sessions by default.
 
 ---

@@ -14,19 +14,11 @@ To work with this server, install the required automation dependencies:
 # 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Configure environment credentials (recommended for automated sessions)
-export SERVER_SSH_HOST="100.81.129.68"
-export SERVER_SSH_PORT="22"
-export SERVER_SSH_USER="mostak"
-export SERVER_SSH_PASS="<server-password>"
+# 2. Verify the server's SSH host-key fingerprint through a trusted channel,
+# then connect once with OpenSSH to record the verified key in known_hosts.
+ssh mostak@100.81.129.68
 
-# On Windows PowerShell:
-$env:SERVER_SSH_HOST="100.81.129.68"
-$env:SERVER_SSH_PORT="22"
-$env:SERVER_SSH_USER="mostak"
-$env:SERVER_SSH_PASS="<server-password>"
-
-# 3. Run automated safe audit to refresh server status
+# 3. Run the read-only audit. It prompts for a password if no SSH key is supplied.
 python scripts/server-audit.py
 ```
 
@@ -58,15 +50,11 @@ Every AI agent operating on this server **MUST** adhere to the following safety 
 - **NEVER** run unvetted disk formatting commands (`mkfs`, `fdisk`, `dd`).
 - **NEVER** perform blanket directory deletions (`rm -rf /` or deleting `/data/coolify`).
 
-### 2. Sudo Execution Protocol
-The primary user (`mostak`) requires a password for `sudo` operations:
-- For programmatic SSH execution via Python Paramiko:
-  ```python
-  # Safe non-interactive sudo execution template
-  stdin, stdout, stderr = client.exec_command(f"echo '{password}' | sudo -S <command>")
-  output = stdout.read().decode('utf-8').replace(f"[sudo] password for {user}: ", "").strip()
-  ```
-- **Filter Secrets**: Always sanitize and strip passwords from returned logs before outputting them to documents or chat transcripts.
+### 2. SSH Credentials and Privileged Commands
+- Use the audit script's password prompt or a protected SSH key. Verify the server host key before first use; the script rejects unknown host keys.
+- Never place a password in an SSH command, shell history, process arguments, output, or documentation. Removing a password from returned text does not undo exposure in a command.
+- The audit runs read-only commands without `sudo`. Do not add a generic remote `sudo` helper. Review and authorize each privileged operation under [AGENTS.md](../AGENTS.md).
+- The administrative user has Docker access, which grants root-level power. These agent instructions do not technically restrict that account; use a separate account without sudo or Docker socket access if an agent needs enforced read-only access.
 
 ### 3. Docker & Coolify Precautions
 - **Do not modify `/data/coolify/source/.env`** without creating a timestamped backup copy first (`cp .env .env.bak.$(date +%s)`).
@@ -80,39 +68,9 @@ Whenever an agent executes an emergency fix or alters system behavior:
 
 ---
 
-## 🐍 Reusable Agent Python SSH Automation Snippet
+## 🐍 Reusable Read-Only SSH Audit
 
-AI agents can directly execute this standalone Python snippet to safely run remote commands on the server:
-
-```python
-import os
-import paramiko
-
-HOST = os.environ.get("SERVER_SSH_HOST", "100.81.129.68")
-USER = os.environ.get("SERVER_SSH_USER", "mostak")
-PASS = os.environ.get("SERVER_SSH_PASS")  # Provide password via env
-PORT = int(os.environ.get("SERVER_SSH_PORT", "22"))
-
-def execute_remote(cmd: str, use_sudo: bool = False) -> str:
-    client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(hostname=HOST, port=PORT, username=USER, password=PASS, timeout=15)
-    
-    if use_sudo:
-        full_cmd = f"echo '{PASS}' | sudo -S {cmd}"
-    else:
-        full_cmd = cmd
-        
-    stdin, stdout, stderr = client.exec_command(full_cmd, timeout=30)
-    out = stdout.read().decode("utf-8", errors="replace")
-    out = out.replace(f"[sudo] password for {USER}: ", "").strip()
-    client.close()
-    return out
-
-# Example: Check running containers
-if __name__ == "__main__":
-    print(execute_remote("docker ps --format 'table {{.Names}}\t{{.Status}}'", use_sudo=True))
-```
+Use [`scripts/server-audit.py`](../scripts/server-audit.py) instead of copying an ad hoc SSH or `sudo` snippet. It uses the local `known_hosts` file and rejects unverified host keys. The generated report can contain network and service details; review it before sharing.
 
 ---
 

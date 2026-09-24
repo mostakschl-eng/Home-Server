@@ -64,7 +64,8 @@ Home-Server/
 │   └── inc-003-docker-disk-exhaustion-prevention.md # Fix: Automated Weekly Pruning Pipeline
 │
 └── scripts/                           # Operational Utilities
-    └── server-audit.py                # Non-destructive inventory collection tool
+    ├── server-audit.py                # Non-destructive inventory collection tool
+    └── media-optimizer-test/          # Local-only image/video test bench
 ```
 
 ---

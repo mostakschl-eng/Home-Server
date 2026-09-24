@@ -1,0 +1,7 @@
+.cache/
+media-optimizer
+media-optimizer.exe
+media-optimizer-linux-*
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
