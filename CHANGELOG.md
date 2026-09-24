@@ -8,6 +8,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+- Resolved Nextcloud administrative setup warnings:
+  - Configured `trusted_proxies` (`10.0.0.0/8`, `172.16.0.0/12`, `127.0.0.1`) and `forwarded_for_headers` (`HTTP_X_FORWARDED_FOR`) to properly recognize Traefik reverse proxy and resolve client IP spoofing vulnerability.
+  - Performed expensive database mimetype repair (`occ maintenance:repair --include-expensive`).
+  - Configured off-peak background maintenance window (`maintenance_window_start = 20` UTC / 2:00 AM BST).
+  - Configured default phone validation region to `BD` (`default_phone_region = BD`).
+  - Configured valid server identifier integer (`serverid = 1`).
+  - Disabled unused containerized AppAPI daemon (`app_api`) to prevent CPU and memory exhaustion on the dual-core host.
+  - Archived historical setup/token log errors into `nextcloud.log.bak`.
+- Added automatic `.env` loading to `scripts/server-audit.py`.
+
 ### Changed
 - Clarified that agent rules are procedural rather than OS-enforced, and documented the administrative account's Docker privilege.
 - Removed password-in-command SSH examples; the read-only audit now rejects unverified host keys.

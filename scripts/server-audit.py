@@ -50,6 +50,12 @@ def main():
     parser.add_argument("--output", default="server_audit_report.json", help="Output file path")
     args = parser.parse_args()
 
+    try:
+        import dotenv
+        dotenv.load_dotenv()
+    except ImportError:
+        pass
+
     password = os.environ.get("SERVER_SSH_PASS")
     if not password and not args.key:
         password = getpass.getpass(f"Enter SSH password for {args.user}@{args.host}: ")

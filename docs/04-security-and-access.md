@@ -61,7 +61,8 @@ To lock down external Wi-Fi LAN access while guaranteeing zero-risk remote acces
 2. **Tailscale-Only Application Binding**: Management services are explicitly bound to the Tailscale IP (`100.81.129.68`), preventing Docker from listening on Wi-Fi:
    - Coolify Dashboard: `100.81.129.68:8000` (Local Wi-Fi returns *Connection refused*)
    - MCP Memory Service: `100.81.129.68:8001` (Local Wi-Fi returns *Connection refused*)
-3. **Ghost Mode on Home LAN**: Any rogue device or guest connected to the home Wi-Fi scanning the server IP cannot detect or access Coolify or internal AI APIs.
+   - Remote Media Downloader: `100.81.129.68:8003` (Local Wi-Fi returns *Connection refused*)
+3. **Ghost Mode on Home LAN**: Any rogue device or guest connected to the home Wi-Fi scanning the server IP cannot detect or access Coolify, internal AI APIs, or download managers.
 
 ---
 

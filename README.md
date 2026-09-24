@@ -56,7 +56,8 @@ Home-Server/
 │   ├── 08-disaster-recovery.md        # Backups, SQLite snapshots, bare-metal restore SOP
 │   ├── 09-agent-developer-guide.md    # Operating guide & safety protocol for AI agents & engineers
 │   ├── 10-nextcloud-media-optimizer.md # Local optimizer workflow, current status, and test results
-│   └── 11-media-optimizer-server-setup.md # Future server installation and 5 AM schedule procedure
+│   ├── 11-media-optimizer-server-setup.md # Future server installation and 5 AM schedule procedure
+│   └── 12-remote-media-downloader.md  # Aria2 + AriaNg downloader architecture & Nextcloud sync
 │
 ├── runbooks/                          # Incident Post-Mortems & Operational Runbooks
 │   ├── README.md                      # Runbook catalog & emergency troubleshooting guide
