@@ -5,3 +5,5 @@ media-optimizer-linux-*
 *.sqlite
 *.sqlite-shm
 *.sqlite-wal
+/testdata/input/*
+!/testdata/input/.gitkeep

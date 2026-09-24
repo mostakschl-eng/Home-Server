@@ -54,7 +54,9 @@ Home-Server/
 │   ├── 06-deployed-services.md        # Coolify suite, PostgreSQL, Redis, MCP Memory Service
 │   ├── 07-maintenance-automation.md   # Weekly cleanup cron, Tailscale GRO service, log rotation
 │   ├── 08-disaster-recovery.md        # Backups, SQLite snapshots, bare-metal restore SOP
-│   └── 09-agent-developer-guide.md    # Operating guide & safety protocol for AI agents & engineers
+│   ├── 09-agent-developer-guide.md    # Operating guide & safety protocol for AI agents & engineers
+│   ├── 10-nextcloud-media-optimizer.md # Local optimizer workflow, current status, and test results
+│   └── 11-media-optimizer-server-setup.md # Future server installation and 5 AM schedule procedure
 │
 ├── runbooks/                          # Incident Post-Mortems & Operational Runbooks
 │   ├── README.md                      # Runbook catalog & emergency troubleshooting guide
@@ -65,8 +67,10 @@ Home-Server/
 │
 └── scripts/                           # Operational Utilities
     ├── server-audit.py                # Non-destructive inventory collection tool
-    └── media-optimizer-test/          # Local-only image/video test bench
+    └── media-optimizer/               # Go optimizer; local samples are git-ignored
 ```
+
+The optimizer is local-only and has not been installed or run on the server. See [its workflow and current status](docs/10-nextcloud-media-optimizer.md) and the [future server setup procedure](docs/11-media-optimizer-server-setup.md).
 
 ---
 

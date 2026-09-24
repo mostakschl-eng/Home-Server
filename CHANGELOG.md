@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added a local-only Go media optimizer for lossless JPEG/PNG/WebP processing, video stream-copy metadata stripping, and resumable Nextcloud queueing. It has not been deployed or connected to the server.
+- Consolidated the local test bench into `scripts/media-optimizer/`, preserving the seven original samples and removing generated outputs and bundled tools; added workflow and future server setup documentation.
 
 ### Planned
 - [ ] Migrate primary network uplink from Wi-Fi (`wlp2s0`) to Gigabit Ethernet (`enp0s31f6`) for lower latency and reduced packet jitter.
