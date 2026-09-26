@@ -17,6 +17,20 @@ Designed with enterprise standards inspired by hyperscaler documentation practic
 
 ---
 
+## 🔐 Your private server credentials file
+
+The project-wide template is [`.env.example`](.env.example). To keep your own server passwords in one local file:
+
+1. Copy `.env.example` to `.env` in this repository's root (`D:\Home server\.env` on this computer). In PowerShell: `Copy-Item .env.example .env`. On Linux: `cp .env.example .env && chmod 600 .env`.
+2. Open `.env` in a text editor. Fill in each value on its own `NAME=value` line. Add another named line only when a new service actually needs it. Do not paste a private SSH key into the file.
+3. Keep `.env` private and backed up in a secure, encrypted location. The repository's `.gitignore` excludes `*.env`, including this file. Check with `git status --short --ignored .env` before sharing or committing the repository.
+
+This is a **personal credential inventory**, not a configuration automatically loaded by the server. Changing a value here does not change a password or token in Coolify, Nextcloud, Aria2, Tailscale, or a running container. Keep the actual service configuration in sync when you rotate credentials. Coolify's system file `/data/coolify/source/.env` is separate and must not be replaced with this project file. A password manager is safer for long-term storage because one plaintext file exposes every listed credential if copied or leaked.
+
+Live check on 2026-09-25: Coolify's database and Redis both have configured credentials. Nextcloud's database credentials are configured, while its Redis reports no password. The Aria2 RPC secret in this file matches the running container. No MCP token appeared in that container's environment. The current server is already connected to Tailscale; an auth key is not needed for normal access. An SSH key path, sudo password, Coolify username, and Nextcloud app password have not been verified for this inventory and are omitted. If an integration later needs a Nextcloud app password, create one in Nextcloud's **Settings → Security / Devices**; it is shown only when created. [Nextcloud instructions](https://docs.nextcloud.com/server/stable/user_manual/en/session_management.html).
+
+---
+
 ## 🖥️ Server Quick Facts
 
 | Dimension | Specification | Notes |

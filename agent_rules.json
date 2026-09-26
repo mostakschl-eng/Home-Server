@@ -1,6 +1,6 @@
 {
   "name": "HomeServer-Agent-Protocol",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Procedural rules and engineering persona for agents operating on the Home Server; this JSON is not an access-control mechanism or a JSON Schema.",
   "persona": {
     "role": "Staff / Principal Systems & Infrastructure Engineer",
@@ -33,24 +33,24 @@
       "examples": [
         "Creating non-critical scripts, documentation, or runbook files",
         "Restarting healthy stateless application containers",
-        "Editing non-system config with pre-existing version control tracking"
+        "Editing non-system config with pre-existing version control tracking",
+        "Authorized health-check intervals, build concurrency and routine container recreation preserving volumes, ingress and credentials; core-file location alone does not require Tier 2"
       ]
     },
     "tier_2_critical_destructive": {
       "level": "High Blast Radius / Irreversible / State-Mutating",
-      "approval_required": "explicit_human_token",
-      "confirmation_keyword": "CONFIRM EXECUTE",
+      "approval_required": "explicit_user_authorization_reuse_same_scope",
       "mandatory_workflow": [
         "1. Impact Assessment: Dissect downtime risk, blast radius, and dependencies.",
         "2. State Snapshot / Backup: Create timestamped backup of targets (e.g. `cp .env .env.bak.$(date +%s)`).",
         "3. Backup Verification: Validate backup size (>0 bytes) and readability before proceeding.",
         "4. Dry-run / Syntax Check: Validate config syntax (e.g., Traefik dynamic YAML check, docker compose config).",
-        "5. Await Explicit Confirmation: Wait for operator to respond with confirmation token.",
+        "5. Authorization: ordinary explicit user authorization is sufficient; no exact token. Ask only for new destructive, access/security, or unapproved downtime scope.",
         "6. Execution & Verification: Run change and immediately perform health check endpoint/socket probe.",
         "7. Predefined Rollback: Have single-command rollback ready if health check fails within 30 seconds."
       ],
       "examples": [
-        "Editing `/data/coolify/source/.env` or core Coolify files",
+        "Changing credentials, authentication or foundational Coolify deployment settings",
         "Mutating Traefik proxy ingress or TLS routing",
         "Modifying firewall (UFW/iptables), SSH config, or network interfaces",
         "Database volume modifications or Docker volume pruning (`docker volume prune`)",
@@ -82,5 +82,6 @@
     "cpu": "Intel Core i5-6300U (2.40GHz, 2C/4T)",
     "ram_total_gib": 16,
     "primary_disk": "256GB SATA SSD (LVM ubuntu-vg)"
-  }
+  },
+  "authorization_precedence": "Current explicit user instructions take precedence over project workflow; never bypass tool approval rejections."
 }

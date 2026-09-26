@@ -22,19 +22,21 @@ When working on this repository, you must act as a **Staff/Principal Infrastruct
 
 ## 🚦 Action Tiering & Operational Protocol
 
-All actions executed by AI agents are strictly categorized into 3 tiers:
+Classify actions by actual impact, not just file location. Current explicit user instructions take precedence over this project workflow. Do not ask repeatedly for an already authorized action. These rules do not override tool approval decisions or permit bypassing an approval rejection.
+
+Actions are categorized into 3 tiers:
 
 ### Tier 0: Read-Only Diagnostics (Always Permitted)
 - **Scope**: Status queries (`uptime`, `free -h`, `df -h`, `vmstat`), container inspection (`docker ps`, `docker logs`), socket monitoring (`ss -tulpn`), log reading (`journalctl`).
 - **Approval**: Not required. Safe to run automatically.
 
 ### Tier 1: Low-Blast Reversible Changes
-- **Scope**: Documentation updates, writing non-system helper scripts, restarting stateless application containers.
+- **Scope**: Documentation updates, non-system helper scripts, application tuning, health-check intervals, build concurrency, and routine container recreation that preserves volumes, ingress, credentials, and resource definitions. A core-file location alone does not make a narrow reversible change Tier 2.
 - **Approval**: Summarize intent and change impact before executing. Verify the result afterward: validate files for documentation or code changes, and check service health for runtime changes.
 
-### Tier 2: Critical / State-Mutating / High-Blast (Strict Approval Required)
+### Tier 2: Destructive / Access-Changing / High-Blast Changes
 - **Scope**:
-  - Modifying `/data/coolify/source/.env` or core Coolify files.
+  - Changing credentials, authentication, or foundational Coolify deployment settings.
   - Mutating Traefik proxy ingress, routing, or TLS certs.
   - Modifying firewall (UFW/iptables), SSH daemon config, or network interfaces.
   - Pruning Docker volumes (`docker volume prune`), touching database volumes (`coolify-db`, `coolify-redis`, `mcp-memory-data`).
@@ -44,7 +46,7 @@ All actions executed by AI agents are strictly categorized into 3 tiers:
   2. **State Backup**: Create a timestamped backup copy (`cp <target> <target>.bak.$(date +%s)`).
   3. **Backup Verification**: Validate backup file size (>0 bytes) and readability before proceeding.
   4. **Dry-Run / Syntax Validation**: Validate config syntax (e.g. docker compose config or yaml linting).
-  5. **Explicit Confirmation**: Present risk summary and wait for user to input: `CONFIRM EXECUTE`.
+  5. **Authorization**: Present material risks. Ordinary explicit user authorization is sufficient; no exact phrase is required. Reuse prior authorization for the same scope. Ask only when the proposed change introduces a new destructive action, access/security change, or downtime beyond the authorized scope.
   6. **Execution & Health Probe**: Run change and immediately probe the endpoint / socket.
   7. **Rollback Ready**: Keep pre-composed rollback command ready if health check fails within 30 seconds.
 

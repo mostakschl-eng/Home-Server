@@ -20,8 +20,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Added automatic `.env` loading to `scripts/server-audit.py`.
 
 ### Changed
+- Reduced live Coolify build concurrency from two to one and trimmed Preview Generator's background size specifications from 12 to five. Added a privacy-safe, rotating upload timing log in the Nextcloud application nginx configuration. All values, generated specifications, nginx syntax, and service health were verified.
+- Tuned live Nextcloud image processing: one concurrent new preview, a 2048-pixel maximum on each axis, JPEG preview quality 80, and a 60-second Preview Generator job budget every five minutes. Switched transactional file locking from APCu to the existing Redis container while keeping local APCu caching. Settings, Redis implementation, and status endpoint were verified; upload CPU reduction has not been measured.
+- Replaced the obsolete once-per-minute `Downloads` scan with a five-minute `Media Downloads` scan protected by `flock`; a manual scan completed with zero errors. See `runbooks/inc-008-nextcloud-upload-cpu-tuning.md` for backups, verification, rollback, and the read-only Coolify review.
 - Clarified that agent rules are procedural rather than OS-enforced, and documented the administrative account's Docker privilege.
 - Removed password-in-command SSH examples; the read-only audit now rejects unverified host keys.
+- Updated the Aria2 downloader guide for the live `Media Downloads` storage mount and documented that the Nextcloud scan cron still targets the old `Downloads` folder.
 
 ### Added
 - Added a local-only Go media optimizer for lossless JPEG/PNG/WebP processing, video stream-copy metadata stripping, and resumable Nextcloud queueing. It has not been deployed or connected to the server.
@@ -105,3 +109,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Installed and connected Tailscale Mesh (`homeserver` @ `100.81.129.68`).
 - Enabled `fail2ban` service for SSH brute-force defense.
 - Verified system hardware: Intel Core i5-6300U, 16 GB DDR4 RAM, 256 GB SanDisk SSD.
+- Added privacy-safe PHP request CPU/timing logs and recorded the latest 21-image upload diagnosis; core health-check apply remains blocked by the required Tier 2 confirmation.
+- Simplified agent approvals at operator request: routine reversible tuning uses existing authorization, no exact confirmation token; destructive and access-changing work retains risk review and tool approval boundaries.
+- Fixed Media Downloads cron argument handling using direct PHP occ; verified the recent movie in Nextcloud file cache and added the home-router Tailscale setup guide.
+- Set Nextcloud preview JPEG quality to 70 for the requested visual trial; verified saved configuration and healthy status. Existing cached previews and original files retained.
+- Excluded Aria2 resume sidecars from Nextcloud indexing, refreshed the existing auxiliary cache entry, and verified media visibility without deleting movie or resume data.
+- Changed Nextcloud preview JPEG quality from 70 to 60 for the authorized visual/loading trial; verified saved value and healthy status.
+- Audited permanent deletion and ran native orphan-preview cleanup; verified orphan preview entries decreased from 564 across 68 missing sources to zero.
+- Completed requested native preview-cache reset and started low-priority sequential regeneration at JPEG quality 60; original files preserved.
+- Verified full preview regeneration completed: 468 source IDs and 2787 cached preview entries at the current quality/sizing configuration.
